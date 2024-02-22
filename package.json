@@ -1,6 +1,6 @@
 {
     "name": "tagged-gallery",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "description": "Main Gallery to tag, filter, and add notes to images. Display blocks to embed images inside notes. Display block to an image information",
     "author": "Tom",
     "main": "main.js",
