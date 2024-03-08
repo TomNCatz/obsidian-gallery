@@ -21,9 +21,6 @@
 ### [Context Menu](https://github.com/TomNCatz/obsidian-gallery/blob/main/docs/README_ContextMenu.md)
 ![](docs/images/ContextMenu.png)
 
-### Settings:
-![](docs/images/Gallery_Settings.png)
-
 ## [Tenative Roadmap](https://github.com/TomNCatz/obsidian-gallery/blob/main/docs/README_Roadmap.md)
 
 # Release Notes
