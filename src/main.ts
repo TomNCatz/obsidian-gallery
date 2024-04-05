@@ -353,8 +353,6 @@ export default class GalleryTagsPlugin extends Plugin
         }
       }
     }
-
-    new Notice(this.propertyCache['artist'].length.toString());
   }
 
   #buildImageCache()
