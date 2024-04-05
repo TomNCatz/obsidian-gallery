@@ -1,6 +1,6 @@
 {
     "name": "tagged-gallery",
-    "version": "1.6.3",
+    "version": "1.6.4",
     "description": "Main Gallery to tag, filter, and add notes to images. Display blocks to embed images inside notes. Display block to an image information",
     "author": "Tom",
     "main": "main.js",
@@ -14,14 +14,14 @@
         "pub": "publish.sh"
     },
     "dependencies": {
-        "canvas": "^2.11.2",
-        "extract-colors": "^3.0.0",
+        "canvas": "latest",
+        "extract-colors": "latest",
         "obsidian": "latest",
-        "rollup-plugin-copy": "^3.4.0",
+        "rollup-plugin-copy": "latest",
         "svelte": "^4.2.0",
         "svelte-grid": "^5.1.2",
-        "ts-exif-parser": "^0.2.2",
-        "tslib": "2.6.2"
+        "ts-exif-parser": "latest",
+        "tslib": "latest"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "25.0.4",

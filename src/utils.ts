@@ -2,7 +2,7 @@ import type { App, CachedMetadata, FrontMatterCache, TAbstractFile } from 'obsid
 import { TFile, normalizePath, Notice, Platform, getAllTags } from 'obsidian'
 import type GalleryTagsPlugin from './main'
 import { ExifData, ExifParserFactory } from 'ts-exif-parser'
-import { extractColors, type FinalColor } from '../node_modules/extract-colors'
+import { extractColors } from 'extract-colors'
 import { EXTENSIONS, EXTRACT_COLORS_OPTIONS, VIDEO_REGEX, DEFAULT_TEMPLATE } from './TechnicalFiles/Constants'
 import { loc } from './Loc/Localizer'
 import type en from './Loc/Languages/en'
@@ -350,14 +350,18 @@ export const addEmbededTags = async (imgTFile: TFile, infoTFile: TFile, plugin: 
   && !(data.frontmatter && data.frontmatter.Palette && data.frontmatter.Palette.length > 0))
   
   const shouldLink = !(data.frontmatter && data.frontmatter.targetImage && data.frontmatter.targetImage.length > 0)
-  let colors: FinalColor[]
+  let colors: string[] = []
 
   if(shouldColor)
   {
     const measureEl = new Image();
     measureEl.src = plugin.app.vault.getResourcePath(imgTFile);
 
-    colors = await extractColors(measureEl, EXTRACT_COLORS_OPTIONS)
+    const colorstemp = await extractColors(measureEl, EXTRACT_COLORS_OPTIONS)
+    for (let i = 0; i < colorstemp.length; i++) 
+    {
+      colors.push(colorstemp[i].hex);
+    }
   }
 
   if(shouldLink || keywords || shouldColor)
@@ -413,7 +417,7 @@ export const addEmbededTags = async (imgTFile: TFile, infoTFile: TFile, plugin: 
         
         for(let i = 0; i < colors.length; i++)
         {
-          hexList.push(colors[i].hex);
+          hexList.push(colors[i]);
         }
         
         frontmatter.Palette = hexList;
