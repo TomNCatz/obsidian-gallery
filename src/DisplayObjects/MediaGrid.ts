@@ -18,8 +18,6 @@ export class MediaGrid
 {
 	plugin: GalleryTagsPlugin
 	mediaSearch: MediaSearch
-
-	selectMode: boolean = false;
 	
 	#tempImg: string
 	#oldWidth: number = 0;
@@ -232,16 +230,16 @@ export class MediaGrid
 			// Mobile clicks don't seem to include shift key information
 			if(event.shiftKey)
 			{
-				this.selectMode = true;
+				this.mediaSearch.selectMode = true;
 			}
 
 		}, false)
 
 		document.addEventListener('keyup', async (event) =>
 		{
-			if(this.selectMode && !event.shiftKey)
+			if(this.mediaSearch.selectMode && !event.shiftKey)
 			{
-				this.selectMode = false;
+				this.mediaSearch.selectMode = false;
 			}
 
 			if (this.imageFocusEl.style.getPropertyValue('display') != 'block')
@@ -314,7 +312,7 @@ export class MediaGrid
 			}
 		}
 
-		if(Keymap.isModifier(evt as UserEvent, 'Shift') || this.selectMode)
+		if(Keymap.isModifier(evt as UserEvent, 'Shift') || this.mediaSearch.selectMode)
 		{
 			if(!visualEl.classList.contains("gallery-grid-vid") && !visualEl.classList.contains("gallery-grid-img"))
 			{

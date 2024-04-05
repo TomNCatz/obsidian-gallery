@@ -360,20 +360,6 @@ export class MediaSearch
 		this.customList = null;
 	}
 
-	selectElement(visualEl:(HTMLVideoElement | HTMLImageElement)): boolean
-	{
-		if(this.selectedEls.contains(visualEl))
-		{
-			this.selectedEls.remove(visualEl);
-			return false;
-		}
-		else
-		{
-			this.selectedEls.push(visualEl);
-			return true;
-		}
-	}
-	
 	async #applyFilter(): Promise<void>
 	{
 		this.totalCount = 0;
