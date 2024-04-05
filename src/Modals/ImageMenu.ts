@@ -131,10 +131,7 @@ export class ImageMenu extends MenuPopup
 				}
 			}
 
-			if(!this.#isRemote)
-			{
-				this.#createItem(Options.CopyImageLinks);
-			}
+			this.#createItem(Options.CopyImageLinks);
 			this.#createItem(Options.CopyMetaLinks);
 			
 			this.addSeparator();
@@ -189,8 +186,7 @@ export class ImageMenu extends MenuPopup
 			(result == Options.StartSelection 
 			|| result == Options.EndSelection 
 			|| result == Options.SelectAll 
-			|| result == Options.ClearSelection 
-			|| result == Options.CopyImageLinks))
+			|| result == Options.ClearSelection))
 		{
 			this.#results(result);
 			return;
@@ -459,6 +455,11 @@ export class ImageMenu extends MenuPopup
 			if(file instanceof TFile)
 			{
 				links += `![${file.basename}](${preprocessUri(file.path)})\n`
+			}
+			else if(validString(source))
+			{
+				const name = source.substring(source.lastIndexOf("/")+1);
+				links += `![${name}](${source})\n`
 			}
 		}
 
