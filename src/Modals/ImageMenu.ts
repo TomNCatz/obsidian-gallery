@@ -33,7 +33,8 @@ enum Options
 	DeleteMeta = 15,
 	CopyImage = 16,
 	ShareMedia = 17,
-	OpenInfoLeaf = 18
+	OpenInfoLeaf = 18,
+	CopyImagesBlock = 19
 }
 
 export class ImageMenu extends MenuPopup
@@ -97,9 +98,9 @@ export class ImageMenu extends MenuPopup
 
 				this.#createItem(Options.OpenMetaFile);
 			}
-
-			if(this.#targets.length > 1)
+			else
 			{
+				this.#isRemote = false;
 				this.AddLabel(loc('IMAGE_MENU_COUNT',this.#targets.length.toString()));
 				this.addSeparator();
 				
@@ -132,6 +133,12 @@ export class ImageMenu extends MenuPopup
 			}
 
 			this.#createItem(Options.CopyImageLinks);
+			
+			if(!this.#isRemote)
+			{
+				this.#createItem(Options.CopyImagesBlock);
+			}
+
 			this.#createItem(Options.CopyMetaLinks);
 			
 			this.addSeparator();
@@ -224,6 +231,7 @@ export class ImageMenu extends MenuPopup
 			case Options.CopyImage: this.#resultCopyImage(); break;
 			case Options.ShareMedia: this.#resultShareMedia(); break;
 			case Options.OpenInfoLeaf: this.#resultOpenInfoLeaf(); break;
+			case Options.CopyImagesBlock: this.#resultCopyImagesBlock(); break;
 			default: 
 				const error = loc('MENU_OPTION_FAULT', Options[result]);
 				new Notice(error);
@@ -466,6 +474,37 @@ export class ImageMenu extends MenuPopup
 		await navigator.clipboard.writeText(links);
 
 		new Notice(loc('COPIED_LINKS'));
+	}
+
+	async #resultCopyImagesBlock()
+	{
+		if(this.#infoView)
+		{
+			this.#infoView.clear()
+		}
+		
+		let names = "";
+
+		for (let i = 0; i < this.#targets.length; i++) 
+		{
+			const source = this.#getSource(this.#targets[i]);
+			const file = this.#plugin.app.vault.getAbstractFileByPath(this.#plugin.getImgResources()[source])
+			if(file instanceof TFile)
+			{
+				names += `${file.basename},`
+			}
+		}
+
+		let filter = this.#mediaSearch.getFilter();
+
+		let result = filter.substring(0,filter.indexOf("name:"));
+		
+		result += "name:"+names;
+		result += filter.substring(filter.indexOf("\n",filter.indexOf("name:")));
+		
+		await navigator.clipboard.writeText(result);
+
+		new Notice(loc('COPIED_FILTER'));
 	}
 
 	async #resultCopyMetaLink()

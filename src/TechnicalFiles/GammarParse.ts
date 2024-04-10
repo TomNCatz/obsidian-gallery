@@ -31,7 +31,7 @@ export type Criteria =
 
 export const parseAdvanceSearch = (input: string, mediaSearch:MediaSearch, clear: boolean = false) =>
 {
-	const parts = input.split(/[ ,;\n\r]/);
+	const parts = input.split(/([ ,;\n\r])/);
 	const rules:Filter[] = [];
 	let rule : Filter;
 	while(parts.length > 0)

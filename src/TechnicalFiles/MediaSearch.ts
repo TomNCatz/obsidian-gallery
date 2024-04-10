@@ -432,7 +432,7 @@ export class MediaSearch
 	#buildRegex():RegExp[]
 	{
 		let reg:RegExp[] = [];
-		const names = this.name.split(/[;, \n\r]/);
+		const names = this.name.split(/[;,\n\r]/);
 		for (let i = 0; i < names.length; i++) 
 		{
 			names[i] = names[i].trim();
