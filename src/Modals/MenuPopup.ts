@@ -14,6 +14,7 @@ export class MenuPopup
 		this.#self = createDiv({cls: "suggestion-container"})
 		this.#optionsArea = this.#self.createDiv("#suggestions-scroll");
 		this.#optionsArea.style.width = "200px";
+		this.#optionsArea.style.overflowY = "auto";
 		this.#self.tabIndex = 0;
 		
 
