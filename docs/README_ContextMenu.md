@@ -9,6 +9,7 @@ It has a number of entries depending on circumstance
 - Select all: Selects all images currently in the filter for the gallery
 - Clear selection: De-selects all currently selected images
 - Copy image links: copies embedded links for all of the selected images
+- Copy images as filter: copies selected images as a gallery block/filter
 - Copy meta links: copies links to all of the meta files for the selected images
 - Add tag: Adds a tag to all selected images. This will not add a duplicate if the tag already is on the file.
 - Pull meta from file: attempts to pull tags and some other meta data from the images into their meta files. Will also create meta files if none exist. If the setting "Skip Keyword import for existing keys" is active, then meta files that already have tags will not attempt to pull tags in.
