@@ -58,7 +58,7 @@ export const EXTRACT_COLORS_OPTIONS = {
 
 export const MIN_IMAGE_WIDTH = 100;
 
-export const EXTENSIONS = ['png', 'jpg', 'jpeg', "webp", "gif", "webm", 'mp4']
+export const EXTENSIONS = ['avif', 'png', 'jpg', 'jpeg', 'svg', 'bmp', "webp", "gif", 'mkv', 'mov', 'ogv', 'webm', 'mp4']
 
 export const CONVERSION_SUPPORT = new RegExp('\\.([pP][nN][gG]|[wW][eE][bB][pP]|[jJ][pP][eE]?[gG])\\?')
 
