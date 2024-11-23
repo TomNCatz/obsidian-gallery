@@ -2,7 +2,7 @@
     "id": "tagged-gallery",
     "name": "Tagged Gallery",
     "version": "1.6.6",
-    "minAppVersion": "1.5.0",
+    "minAppVersion": "1.7.0",
     "description": "Main Gallery to tag / filter / add notes to images. Display blocks to embed images inside notes. Display block to an image information",
     "author": "Tom",
     "authorUrl": "https://github.com/TomNCatz/",

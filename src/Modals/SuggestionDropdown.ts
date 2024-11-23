@@ -1,4 +1,4 @@
-import { fuzzySearch } from "obsidian";
+import { prepareFuzzySearch } from "obsidian";
 import { offScreenPartial } from "../utils";
 
 export class SuggestionDropdown
@@ -168,6 +168,7 @@ export class SuggestionDropdown
 		
 		input = input.toLowerCase();
 		const matches: [string,number][] = []
+		const fuzzySearch = prepareFuzzySearch(input);
 		for (let i = 0; i < items.length; i++) 
 		{
 			if(this.ignoreList.contains(items[i]))
@@ -175,7 +176,7 @@ export class SuggestionDropdown
 				continue;
 			}
 			
-			const result = fuzzySearch({fuzzy: input.split(""), query: input, tokens: input.split(" ") }, items[i]);
+			const result = fuzzySearch(items[i]);
 			if(result)
 			{
 				matches.push([items[i],result.score]);
