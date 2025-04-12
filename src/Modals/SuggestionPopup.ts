@@ -7,6 +7,7 @@ export class SuggestionPopup extends Modal
 	onConfirm: (result:string) => void
 	onCancel: () => void
 	onGetItems: () => string[]
+	confirmLabel: string = loc('CONFIRM');
 	cancelLabel: string = loc('CANCEL');
 	#info: string
 	#original: string
@@ -29,6 +30,21 @@ export class SuggestionPopup extends Modal
 
 		const setting = new Setting(contentEl)
 		.setDesc("")
+		.addButton((btn) =>
+			{
+			btn
+			.setButtonText(this.confirmLabel)
+			.setCta()
+			.onClick(() => 
+			{
+				this.close();
+				this.#complete = true;
+				if(this.onConfirm)
+				{
+					this.onConfirm(input.value);
+				}
+			});
+		})
 		.addButton((btn) =>
 			{
 			btn
