@@ -114,8 +114,8 @@ export const offScreenPartial = function(el:HTMLElement) : boolean
  */
 export const screenOffset = function(el:HTMLElement) : [number,number] {
   var rect = el.getBoundingClientRect();
-  let x = 0;
-  let y = 0;
+  let x = -30;
+  let y = -30;
   const a = (rect.x + rect.width) - window.innerWidth
   if(a > 0)
   {
@@ -128,12 +128,11 @@ export const screenOffset = function(el:HTMLElement) : [number,number] {
   }
   if(rect.x < 0)
   {
-    x = -rect.x;
+    x = x - rect.x;
   }
-  const d = rect.y < 0
   if(rect.y < 0)
   {
-    y = -rect.y;
+    y = y - rect.y;
   }
   return [x,y];
 };
@@ -157,7 +156,7 @@ export const offscreenFull = function(el:HTMLElement) : boolean {
  */
 export const getImageInfo = async (imgPath:string, create:boolean, plugin: GalleryTagsPlugin): Promise<TFile|null> =>
 {
-  if(plugin.settings.imgDataFolder == null)
+  if(plugin.gSettings.imgDataFolder == null)
   {
     return null;
   }
@@ -212,7 +211,7 @@ export const createMetaFile = async (imgPath:string,plugin:GalleryTagsPlugin): P
   let counter = 1
   const imgName = imgPath.split('/').slice(-1)[0]
   let fileName = imgName.substring(0, imgName.lastIndexOf('.'))
-  let filepath = normalizePath(`${plugin.settings.imgDataFolder}/${fileName}.md`);
+  let filepath = normalizePath(`${plugin.gSettings.imgDataFolder}/${fileName}.md`);
   let infoFile: TAbstractFile;
 
   while ((infoFile = plugin.app.vault.getAbstractFileByPath(filepath)) instanceof TFile)
@@ -222,12 +221,12 @@ export const createMetaFile = async (imgPath:string,plugin:GalleryTagsPlugin): P
     {
       return infoFile;
     }
-    filepath = normalizePath(`${plugin.settings.imgDataFolder}/${fileName}_${counter}.md`);
+    filepath = normalizePath(`${plugin.gSettings.imgDataFolder}/${fileName}_${counter}.md`);
     counter++;
   }
 
   
-  const templateTFile = plugin.app.vault.getAbstractFileByPath(normalizePath(plugin.settings.imgmetaTemplatePath+".md"));
+  const templateTFile = plugin.app.vault.getAbstractFileByPath(normalizePath(plugin.gSettings.imgmetaTemplatePath+".md"));
   let template = DEFAULT_TEMPLATE;
   if(templateTFile instanceof TFile)
   {
@@ -341,7 +340,7 @@ export const addEmbededTags = async (imgTFile: TFile, infoTFile: TFile, plugin: 
     return false;
   }
 
-  if(!plugin.settings.skipMetadataOverwrite || !(data.frontmatter && data.frontmatter.tags && data.frontmatter.tags.length > 0 ))
+  if(!plugin.gSettings.skipMetadataOverwrite || !(data.frontmatter && data.frontmatter.tags && data.frontmatter.tags.length > 0 ))
   {
     keywords = await getJpgTags(imgTFile, plugin);
   }
@@ -376,9 +375,9 @@ export const addEmbededTags = async (imgTFile: TFile, infoTFile: TFile, plugin: 
       if(keywords)
       {
         let field:string;
-        if(validString(plugin.settings.alternativeTags))
+        if(validString(plugin.gSettings.alternativeTags))
         {
-          field = plugin.settings.alternativeTags;
+          field = plugin.gSettings.alternativeTags;
         }
         else
         {
@@ -713,5 +712,5 @@ export const ToastMessage = (msg: string, timeoutInSeconds = 10, contextMenuCall
   const additionalInfo = contextMenuCallback  ?  (Platform.isDesktop ? loc('TOAST_ADDITIONAL_CONTEXT', loc(contextKey)) : loc('TOAST_ADDITIONAL')) : "";
   const newNotice: Notice = new Notice(`${loc('PLUGIN_NAME')}\n${msg}\n${additionalInfo}`, timeoutInSeconds*1000);
   //@ts-ignore
-  if(contextMenuCallback) newNotice.noticeEl.oncontextmenu = async () => { contextMenuCallback() };    
+  if(contextMenuCallback) newNotice.messageEl.oncontextmenu = async () => { contextMenuCallback() };    
 }

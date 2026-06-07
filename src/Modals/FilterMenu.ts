@@ -43,7 +43,7 @@ export class FilterMenu extends MenuPopup
 		this.#createItem(FilterOptions.NEWCURRENT);
 		this.addSeparator();
 
-		this.#userList = this.#plugin.settings.namedFilters.map(x => { return x.name;});
+		this.#userList = this.#plugin.gSettings.namedFilters.map(x => { return x.name;});
 	
 		for (let i = 0; i < this.#userList.length; i++) 
 		{			
@@ -145,12 +145,12 @@ export class FilterMenu extends MenuPopup
 
 				if(this.#userList.contains(name))
 				{
-					this.#plugin.settings.namedFilters[this.#userList.indexOf(name)].filter = filter;
+					this.#plugin.gSettings.namedFilters[this.#userList.indexOf(name)].filter = filter;
 				}
 				else
 				{
 					const newFilter: NamedFilter = {name: name, filter: filter};
-					this.#plugin.settings.namedFilters.push(newFilter);
+					this.#plugin.gSettings.namedFilters.push(newFilter);
 				}
 
 				await this.#plugin.saveSettings();

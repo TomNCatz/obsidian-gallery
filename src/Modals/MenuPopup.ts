@@ -108,8 +108,8 @@ export class MenuPopup
 	{
 		activeDocument.body.appendChild(this.#self);
 		
-		this.#self.style.left = (posX)+"px";
-		this.#self.style.top = (posY)+"px";
+		this.#self.style.left = (posX-30)+"px";
+		this.#self.style.top = (posY-30)+"px";
 
 		const optionsRect = this.#optionsArea.getBoundingClientRect();
 		this.#self.style.width = optionsRect.width+"px";

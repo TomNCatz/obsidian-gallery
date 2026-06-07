@@ -44,10 +44,10 @@ export class GallerySettingTab extends PluginSettingTab
       .setDesc(loc('SETTING_UNIQUE_MOBILE_DESC'))
       .addToggle((toggle) =>
       {
-        toggle.setValue(this.plugin.settings.uniqueMobileSettings)
+        toggle.setValue(this.plugin.gSettings.uniqueMobileSettings)
         toggle.onChange(async (value) =>
         {
-          this.plugin.settings.uniqueMobileSettings = value
+          this.plugin.gSettings.uniqueMobileSettings = value
           await this.plugin.saveSettings()
         });
       })
@@ -130,9 +130,9 @@ export class GallerySettingTab extends PluginSettingTab
         dropdown.addOption("", loc('SETTING_DEFAULT_FILTER_NONE'));
         dropdown.addOption("LAST_USED_FILTER", loc('LAST_USED_FILTER'));
 
-        for (let i = 0; i < this.plugin.settings.namedFilters.length; i++) 
+        for (let i = 0; i < this.plugin.gSettings.namedFilters.length; i++) 
         {
-          const name = this.plugin.settings.namedFilters[i].name;
+          const name = this.plugin.gSettings.namedFilters[i].name;
           dropdown.addOption(name, name);
         }
         
@@ -216,12 +216,12 @@ export class GallerySettingTab extends PluginSettingTab
       .setName(loc('SETTING_META_FOLDER_TITLE'))
       .setDesc('')
       .addButton(text => text
-        .setButtonText(this.plugin.settings.imgDataFolder)
+        .setButtonText(this.plugin.gSettings.imgDataFolder)
         .onClick(() =>
         {
           fuzzyFolders.onSelection = (s) =>{
-            this.plugin.settings.imgDataFolder = s
-            infoPathSetting.settingEl.querySelector('button').textContent = this.plugin.settings.imgDataFolder
+            this.plugin.gSettings.imgDataFolder = s
+            infoPathSetting.settingEl.querySelector('button').textContent = this.plugin.gSettings.imgDataFolder
             this.plugin.saveSettings()
           }
 
@@ -241,10 +241,10 @@ export class GallerySettingTab extends PluginSettingTab
       .addText(text =>
         {
           text
-          .setValue(this.plugin.settings.alternativeTags)
+          .setValue(this.plugin.gSettings.alternativeTags)
           .onChange(async value =>
             {
-              this.plugin.settings.alternativeTags = value;
+              this.plugin.gSettings.alternativeTags = value;
               await this.plugin.saveSettings();
               this.plugin.buildTagCache();
             });
@@ -256,10 +256,10 @@ export class GallerySettingTab extends PluginSettingTab
       .setDesc(loc('SETTING_QUICK_IMPORT_DESC'))
       .addToggle((toggle) =>
       {
-        toggle.setValue(this.plugin.settings.skipMetadataOverwrite)
+        toggle.setValue(this.plugin.gSettings.skipMetadataOverwrite)
         toggle.onChange(async (value) =>
         {
-          this.plugin.settings.skipMetadataOverwrite = value
+          this.plugin.gSettings.skipMetadataOverwrite = value
           await this.plugin.saveSettings()
         });
       })
@@ -269,12 +269,12 @@ export class GallerySettingTab extends PluginSettingTab
       .setName(loc('SETTING_META_TEMPLATE_TITLE'))
       .setDesc('')
       .addButton(text => text
-        .setButtonText(this.plugin.settings.imgmetaTemplatePath)
+        .setButtonText(this.plugin.gSettings.imgmetaTemplatePath)
         .onClick(() =>
         {
           fuzzyFiles.onSelection = (s) =>{
-            this.plugin.settings.imgmetaTemplatePath = s.substring(0,s.length-3)
-            metaTemplatSetting.settingEl.querySelector('button').textContent = this.plugin.settings.imgmetaTemplatePath
+            this.plugin.gSettings.imgmetaTemplatePath = s.substring(0,s.length-3)
+            metaTemplatSetting.settingEl.querySelector('button').textContent = this.plugin.gSettings.imgmetaTemplatePath
             this.plugin.saveSettings()
           }
 
@@ -306,7 +306,7 @@ export class GallerySettingTab extends PluginSettingTab
         .setTooltip(loc('SETTING_HIDDEN_INFO_ADD'))
         .onClick(() =>
         {
-          this.plugin.settings.hiddenInfoTicker[hiddenInfoInput] = true;
+          this.plugin.gSettings.hiddenInfoTicker[hiddenInfoInput] = true;
           hiddenInfoInput = '';
           this.plugin.saveSettings();
           this.display();
@@ -316,12 +316,12 @@ export class GallerySettingTab extends PluginSettingTab
         .setTooltip(loc('SETTING_HIDDEN_INFO_RESET'))
         .onClick(() =>
         {
-          this.plugin.settings.hiddenInfoTicker = Object.assign({}, DEFAULT_HIDDEN_INFO);
+          this.plugin.gSettings.hiddenInfoTicker = Object.assign({}, DEFAULT_HIDDEN_INFO);
           this.plugin.saveSettings();
           this.display();
         }));
       
-    this.drawToggleLists(hiddenInfoSetting.descEl, this.plugin.settings.hiddenInfoTicker);
+    this.drawToggleLists(hiddenInfoSetting.descEl, this.plugin.gSettings.hiddenInfoTicker);
 
     // Auto complete fields
     const autoCompleteSetting = new Setting(containerEl)
@@ -340,7 +340,7 @@ export class GallerySettingTab extends PluginSettingTab
         .setTooltip(loc('SETTING_AUTO_COMPLETE_ADD'))
         .onClick(() =>
         {
-          this.plugin.settings.autoCompleteFields[hiddenInfoInput] = true;
+          this.plugin.gSettings.autoCompleteFields[hiddenInfoInput] = true;
           hiddenInfoInput = '';
           this.plugin.saveSettings();
           this.display();
@@ -350,19 +350,19 @@ export class GallerySettingTab extends PluginSettingTab
         .setTooltip(loc('SETTING_AUTO_COMPLETE_RESET'))
         .onClick(() =>
         {
-          this.plugin.settings.autoCompleteFields = {};
+          this.plugin.gSettings.autoCompleteFields = {};
           this.plugin.saveSettings();
           this.display();
         }));
       
-    this.drawToggleLists(autoCompleteSetting.descEl, this.plugin.settings.autoCompleteFields);
+    this.drawToggleLists(autoCompleteSetting.descEl, this.plugin.gSettings.autoCompleteFields);
     
     // Gallery Meta Section
     containerEl.createEl('h2', { text: loc('SETTING_METADATA_HEADER') })
     
-    for (let i = 0; i < this.plugin.settings.namedFilters.length; i++) 
+    for (let i = 0; i < this.plugin.gSettings.namedFilters.length; i++) 
     {
-      const filter = this.plugin.settings.namedFilters[i];
+      const filter = this.plugin.gSettings.namedFilters[i];
 
       new Setting(containerEl)
         .setName(filter.name)
@@ -385,7 +385,7 @@ export class GallerySettingTab extends PluginSettingTab
             .setTooltip(loc('SETTING_FILTER_REMOVE'))
             .onClick(async () => 
             {
-              delete this.plugin.settings.namedFilters[i];
+              delete this.plugin.gSettings.namedFilters[i];
               await this.plugin.saveSettings();
               this.display();
             })

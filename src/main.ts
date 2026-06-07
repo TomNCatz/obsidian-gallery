@@ -14,7 +14,7 @@ import type en from './Loc/Languages/en'
 
 export default class GalleryTagsPlugin extends Plugin
 {
-  settings!: GallerySettings;
+  gSettings!: GallerySettings;
   containerEl!: HTMLElement;
 	accentColor: string;
 	accentColorDark: string;
@@ -65,12 +65,12 @@ export default class GalleryTagsPlugin extends Plugin
 
   platformSettings(): PlatformSettings
   {
-    if(this.settings.uniqueMobileSettings && !Platform.isDesktopApp)
+    if(this.gSettings.uniqueMobileSettings && !Platform.isDesktopApp)
     {
-      return this.settings.mobile;
+      return this.gSettings.mobile;
     }
     
-    return this.settings.desktop;
+    return this.gSettings.desktop;
   }
 
   getTags() : string[]
@@ -227,7 +227,7 @@ export default class GalleryTagsPlugin extends Plugin
           }
         }
         
-		    const propertyList = Object.keys(this.settings.autoCompleteFields);
+		    const propertyList = Object.keys(this.gSettings.autoCompleteFields);
         for(let i = 0; i < propertyList.length; i++)
         {
           const field = propertyList[i];
@@ -319,7 +319,7 @@ export default class GalleryTagsPlugin extends Plugin
   {
     this.tagCache = [];
     this.propertyCache = {};
-    const propertyList = Object.keys(this.settings.autoCompleteFields);
+    const propertyList = Object.keys(this.gSettings.autoCompleteFields);
     for(let m = 0; m < propertyList.length; m++)
     {
       this.propertyCache[propertyList[m]] = [];
@@ -373,7 +373,7 @@ export default class GalleryTagsPlugin extends Plugin
 	async #buildMetaCache(): Promise<void>
 	{
 		this.metaResources = {};
-		const infoFolder = this.app.vault.getAbstractFileByPath(this.settings.imgDataFolder)
+		const infoFolder = this.app.vault.getAbstractFileByPath(this.gSettings.imgDataFolder)
 	
 		if (infoFolder instanceof TFolder)
 		{
@@ -503,13 +503,13 @@ export default class GalleryTagsPlugin extends Plugin
 
   async loadSettings()
   {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
+    this.gSettings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
     let changed = false;
-    for (let i = 0; i < this.settings.namedFilters.length; i++) 
+    for (let i = 0; i < this.gSettings.namedFilters.length; i++) 
     {
-      if(this.settings.namedFilters[i].filter.contains("="))
+      if(this.gSettings.namedFilters[i].filter.contains("="))
       {
-        this.settings.namedFilters[i].filter = this.settings.namedFilters[i].filter.replaceAll("=",":");
+        this.gSettings.namedFilters[i].filter = this.gSettings.namedFilters[i].filter.replaceAll("=",":");
         changed = true;
       }
     }
@@ -522,7 +522,7 @@ export default class GalleryTagsPlugin extends Plugin
 
   async saveSettings()
   {
-    await this.saveData(this.settings)
+    await this.saveData(this.gSettings)
   }
 
   galleryViewCreator(leaf: WorkspaceLeaf)

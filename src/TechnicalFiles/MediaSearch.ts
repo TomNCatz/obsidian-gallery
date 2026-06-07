@@ -226,10 +226,10 @@ export class MediaSearch
 
 	setNamedFilter(filter:string)
 	{
-		this.plugin.settings.namedFilters
-		for (let i = 0; i < this.plugin.settings.namedFilters.length; i++) 
+		this.plugin.gSettings.namedFilters
+		for (let i = 0; i < this.plugin.gSettings.namedFilters.length; i++) 
 		{
-			if(this.plugin.settings.namedFilters[i].name.toLowerCase() == filter.toLowerCase())
+			if(this.plugin.gSettings.namedFilters[i].name.toLowerCase() == filter.toLowerCase())
 			{
 				this.setIndexedFilter(i);
 				return;
@@ -242,9 +242,9 @@ export class MediaSearch
 
 	setIndexedFilter(index:number)
 	{
-		if(this.plugin.settings.namedFilters.length > index)
+		if(this.plugin.gSettings.namedFilters.length > index)
 		{
-			this.setFilter(this.plugin.settings.namedFilters[index].filter);
+			this.setFilter(this.plugin.gSettings.namedFilters[index].filter);
 		}
 		else
 		{

@@ -53,8 +53,8 @@ export class ImageInfoBlock
       .filter(e => validString(e))
     if(infoList.length == 0)
     {
-      infoList = Object.keys(plugin.settings.hiddenInfoTicker)
-      .filter(e => validString(e) && plugin.settings.hiddenInfoTicker[e])
+      infoList = Object.keys(plugin.gSettings.hiddenInfoTicker)
+      .filter(e => validString(e) && plugin.gSettings.hiddenInfoTicker[e])
       .map(param => param.trim().toLowerCase())
     }
 
@@ -164,10 +164,10 @@ export class ImageInfoBlock
     {
       imgTags = getTags(imgInfoCache);
 
-		  const propertyList = Object.keys(plugin.settings.autoCompleteFields);
+		  const propertyList = Object.keys(plugin.gSettings.autoCompleteFields);
       for (let i = 0; i < propertyList.length; i++) 
       {
-        if(plugin.settings.autoCompleteFields[propertyList[i]])
+        if(plugin.gSettings.autoCompleteFields[propertyList[i]])
         {
           imgFields[propertyList[i]] = getTags(imgInfoCache, propertyList[i]);
         }
